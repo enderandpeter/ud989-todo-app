@@ -20,6 +20,7 @@ var app = app || {};
 			'click .toggle': 'toggleCompleted',
 			'dblclick label': 'edit',
             'click .edit-btn': 'edit',
+            'click .priority-btn': 'prioritize',
 			'click .destroy': 'clear',
 			'keypress .edit': 'updateOnEnter',
 			'keydown .edit': 'revertOnEscape',
@@ -77,6 +78,10 @@ var app = app || {};
 			this.$input.focus();
 		},
 
+        prioritize: function(){
+            this.$el.toggleClass('priority');
+        },
+        
 		// Close the `"editing"` mode, saving changes to the todo.
 		close: function () {
 			var value = this.$input.val();
