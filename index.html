@@ -17,10 +17,17 @@
 			<section id="main">
 				<input id="toggle-all" type="checkbox">
 				<label for="toggle-all">Mark all as complete</label>
-				<ul id="todo-list"></ul>
+				<ul id="todo-list"></ul>            
 			</section>
 			<footer id="footer"></footer>
-		</section>
+            <div id="sort-controls">
+                <select id="sort-list">
+                    <option value="order">order</option>
+                    <option value="priority">priority</option>                    
+                </select>
+                <button id="sort-btn">Sort</button>
+            </div>
+		</section>        
 		<footer id="info">
 			<p>Double-click to edit a todo</p>
 			<p>Written by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
@@ -48,6 +55,9 @@
 				</li>
 				<li>
 					<a href="#/completed">Completed</a>
+				</li>
+                <li>
+					<a href="#/priority">Priority</a>
 				</li>
 			</ul>
 			<% if (completed) { %>

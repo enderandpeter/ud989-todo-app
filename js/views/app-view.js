@@ -22,7 +22,8 @@ var app = app || {};
 			'keypress #new-todo': 'createOnEnter',
 			'click #clear-completed': 'clearCompleted',
 			'click #toggle-all': 'toggleAllComplete',
-            'click #new-priority-btn': 'togglePriority'
+            'click #new-priority-btn': 'togglePriority',
+            'click #sort-btn': 'sort'
 		},
 
 		// At initialization we bind to the relevant events on the `Todos`
@@ -36,6 +37,7 @@ var app = app || {};
 			this.$list = $('#todo-list');
             this.$priorityButton = this.$('#new-priority-btn');
             this.$newtodoview = this.$('.newtodoview');
+            this.$sortList = this.$('#sort-list');
 
 			this.listenTo(app.todos, 'add', this.addOne);
 			this.listenTo(app.todos, 'reset', this.addAll);
@@ -97,7 +99,26 @@ var app = app || {};
 		filterAll: function () {
 			app.todos.each(this.filterOne, this);
 		},
-
+        
+        /*
+        Sort the todos on the selected criteria. Some criteria, like priority when based on true
+        or false, need to be reversed to show true (1) first before false (0).
+        */
+        sort: function(){
+            var sortProperty = this.$sortList[0].selectedOptions[0].value;
+            app.todos.comparator = function(model){
+                var sortCriteria = model.get(sortProperty);
+                switch(sortProperty){
+                    case 'priority' : 
+                        sortCriteria = !sortCriteria;
+                    break;
+                }                
+                return sortCriteria;
+            };
+            app.todos.sort();
+            this.addAll();
+        },
+        
 		// Generate the attributes for a new Todo item.
 		newAttributes: function () {
 			return {

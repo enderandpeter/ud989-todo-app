@@ -12,7 +12,7 @@ var app = app || {};
 	var Todos = Backbone.Collection.extend({
 		// Reference to this collection's model.
 		model: app.Todo,
-
+        
 		// Save all of the todo items under the `"todos"` namespace.
 		localStorage: new Backbone.LocalStorage('todos-backbone'),
 
@@ -31,7 +31,7 @@ var app = app || {};
 		nextOrder: function () {
 			return this.length ? this.last().get('order') + 1 : 1;
 		},
-
+        
 		// Todos are sorted by their original insertion order.
 		comparator: 'order'
 	});

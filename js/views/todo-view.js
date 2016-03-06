@@ -34,7 +34,7 @@ var app = app || {};
 		initialize: function () {
 			this.listenTo(this.model, 'change', this.render);
 			this.listenTo(this.model, 'destroy', this.remove);
-			this.listenTo(this.model, 'visible', this.toggleVisible);
+			this.listenTo(this.model, 'visible', this.toggleVisible);            
 		},
 
 		// Re-render the titles of the todo item.
@@ -64,9 +64,16 @@ var app = app || {};
 		},
 
 		isHidden: function () {
-			return this.model.get('completed') ?
-				app.TodoFilter === 'active' :
-				app.TodoFilter === 'completed';
+			switch(app.TodoFilter){
+                case 'priority' :
+                     return !this.model.get('priority');
+                break;
+                default :
+                    return this.model.get('completed') ?
+                        app.TodoFilter === 'active' :
+                        app.TodoFilter === 'completed';
+                break;
+            }            
 		},
 
         // Toggle the `"priority"` state of the model.
