@@ -21,7 +21,8 @@ var app = app || {};
 		events: {
 			'keypress #new-todo': 'createOnEnter',
 			'click #clear-completed': 'clearCompleted',
-			'click #toggle-all': 'toggleAllComplete'
+			'click #toggle-all': 'toggleAllComplete',
+            'click #new-priority-btn': 'togglePriority'
 		},
 
 		// At initialization we bind to the relevant events on the `Todos`
@@ -33,6 +34,8 @@ var app = app || {};
 			this.$footer = this.$('#footer');
 			this.$main = this.$('#main');
 			this.$list = $('#todo-list');
+            this.$priorityButton = this.$('#new-priority-btn');
+            this.$newtodoview = this.$('.newtodoview');
 
 			this.listenTo(app.todos, 'add', this.addOne);
 			this.listenTo(app.todos, 'reset', this.addAll);
@@ -78,6 +81,7 @@ var app = app || {};
 		addOne: function (todo) {
 			var view = new app.TodoView({ model: todo });
 			this.$list.append(view.render().el);
+            this.$newtodoview.removeClass('priority');
 		},
 
 		// Add all items in the **Todos** collection at once.
@@ -99,7 +103,8 @@ var app = app || {};
 			return {
 				title: this.$input.val().trim(),
 				order: app.todos.nextOrder(),
-				completed: false
+				completed: false,
+                priority: this.$priorityButton[0].checked
 			};
 		},
 
@@ -118,6 +123,11 @@ var app = app || {};
 			return false;
 		},
 
+        // Toggle the `"priority"` state of the new Todo item.
+		togglePriority: function () {
+			this.$newtodoview.toggleClass('priority');            
+		},
+        
 		toggleAllComplete: function () {
 			var completed = this.allCheckbox.checked;
 

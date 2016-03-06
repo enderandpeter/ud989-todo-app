@@ -223,7 +223,7 @@ label[for='toggle-all'] {
 	appearance: none;
 }
 
-#todo-list li .priority-btn {
+#todoapp .priority-btn {
 	display: none;
 	height: auto;
 	position: absolute;
@@ -242,11 +242,22 @@ label[for='toggle-all'] {
 	appearance: none;
 }
 
-#todo-list li:hover .priority-btn {
-	display: block;
+#todoapp .priority-btn {
+    top: -2px;    
+    padding-top: 12px;
 }
 
-#todo-list li .priority-btn:after {
+#todoapp #new-priority-btn{
+    height: 64px;
+    padding-top: 16px;
+}
+
+#todo-list li:hover .priority-btn, #header:hover .priority-btn {
+	display: block;
+    font-size: 24px;    
+}
+
+#todo-list li .priority-btn:after, #header:hover .priority-btn:after {
 	content: '!';
 }
 
@@ -282,12 +293,17 @@ label[for='toggle-all'] {
 	text-decoration: line-through;
 }
 
-#todo-list li.priority:not(.completed) label {
+#todoapp .priority:not(.completed) label, #todoapp .newtodoview.priority:not(.completed) input {
 	color: #d66;
 }
 
-#todo-list li.priority .priority-btn:after {
+#todoapp .priority .priority-btn:after {
 	color: #d66;
+}
+
+.newtodoview{
+    font-size: 24px;
+    position: relative;
 }
 
 #todo-list li .destroy,
