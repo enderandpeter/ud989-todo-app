@@ -136,7 +136,7 @@ input[type="checkbox"] {
 }
 
 #new-todo {
-	padding: 16px 16px 16px 60px;
+	padding: 16px 16px 16px 85px;
 	border: none;
 	background: rgba(0, 0, 0, 0.02);
 	z-index: 2;
@@ -223,16 +223,17 @@ label[for='toggle-all'] {
 	appearance: none;
 }
 
-#todoapp .priority-btn {
+#todoapp .priority-div {
 	display: none;
 	height: auto;
 	position: absolute;
-	top: 0;
+	top: 1px;  
 	bottom: 0;
 	left: 34px;
-	padding: 0 4px;
+	padding: 4px 0;
 	background-color: #fcfcfc;
-	/*color: #d00;*/
+    color: #d66;
+    width: 25px;
 	z-index: 10;
 	/* Mobile Safari */
 	border: none;
@@ -242,23 +243,47 @@ label[for='toggle-all'] {
 	appearance: none;
 }
 
-#todoapp .priority-btn {
-    top: -2px;    
-    padding-top: 12px;
+#todoapp .priority-div > div {
+    display: inline-block;
+    float: left;
+    width: 50%;
 }
 
-#todoapp #new-priority-btn{
+#todoapp .priority-label{    
+    padding-top: 16px;
+}
+
+#todoapp .priority-btn{
+    display: block;
+}
+
+#todoapp .priority-btn-up{
+    transform: rotate(-45deg); 
+}
+
+#todoapp .priority-btn-down{
+    transform: rotate(135deg);
+}
+
+#todoapp .priority-btn:after {
+    height: 50%;
+    width: 16px;
+    height: 16px;
+    content: '\a0';
+    display: block;
+    border-top: solid green medium;
+    border-right: solid green medium;       
+}
+
+#todoapp #new-priority-div{
     height: 64px;
     padding-top: 16px;
 }
 
-#todo-list li:hover .priority-btn, #header:hover .priority-btn {
+#todo-list li:hover .priority-div, #header:hover .priority-div {
 	display: block;
-    font-size: 24px;    
-}
-
-#todo-list li .priority-btn:after, #header:hover .priority-btn:after {
-	content: '!';
+    font-size: 24px;
+    width: 50px;
 }
 
 #todo-list li .toggle:after {
@@ -280,7 +305,7 @@ label[for='toggle-all'] {
 #todo-list li label {
 	white-space: pre;
 	word-break: break-word;
-	padding: 15px 60px 15px 15px;
+	padding: 15px 60px 15px 45px;
 	margin-left: 45px;
 	display: block;
 	line-height: 1.2;
@@ -293,12 +318,13 @@ label[for='toggle-all'] {
 	text-decoration: line-through;
 }
 
-#todoapp .priority:not(.completed) label, #todoapp .newtodoview.priority:not(.completed) input {
+#todoapp .priority-div:not(.completed) label,{
 	color: #d66;
 }
 
-#todoapp .priority .priority-btn:after {
-	color: #d66;
+#todoapp .priority-btn-div{
+    width: 20px;
+    padding-top: 6px;
 }
 
 .newtodoview{

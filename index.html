@@ -11,7 +11,13 @@
 				<h1>todos</h1>
                 <div class="newtodoview">
                     <input id="new-todo" placeholder="What needs to be done?" autofocus>
-                    <input id="new-priority-btn" class="priority-btn" type="checkbox">
+                    <div class="priority-div">
+                        <div class="priority-label"></div>
+                        <div class="priority-btn-div">
+                            <button class="priority-btn priority-btn-up"></button>
+                            <button class="priority-btn priority-btn-down"></button>
+                        </div>
+                    </div>
                 </div>
 			</header>
 			<section id="main">
@@ -37,7 +43,14 @@
 		<script type="text/template" id="item-template">
 			<div class="view">
 				<input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
-                <input class="priority-btn" type="checkbox" <%= priority ? 'checked' : '' %>>                
+                <div class="priority-div">
+                    <div class="priority-label"></div>
+                    <div class="priority-btn-div">
+                        <button class="priority-btn priority-btn-up"></button>
+                        <button class="priority-btn priority-btn-down"></button>
+                    </div>
+                </div>
+                <!-- <input class="priority-btn" type="checkbox" <%= priority ? 'checked' : '' %>> -->
 				<label><%- title %><%= completed ? '<span> -- done</span>' : '' %></label>
                 <button class="edit-btn"></button>
 				<button class="destroy"></button>
