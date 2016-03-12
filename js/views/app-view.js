@@ -22,7 +22,7 @@ var app = app || {};
 			'keypress #new-todo': 'createOnEnter',
 			'click #clear-completed': 'clearCompleted',
 			'click #toggle-all': 'toggleAllComplete',
-            'click #new-priority-btn': 'togglePriority',
+            'click .priority-btn': 'setPriority',
             'click #sort-btn': 'sort'
 		},
 
@@ -36,8 +36,18 @@ var app = app || {};
 			this.$main = this.$('#main');
 			this.$list = $('#todo-list');
             this.$priorityButton = this.$('#new-priority-btn');
+            this.$priorityLabel = this.$('#new-priority-label');
             this.$newtodoview = this.$('.newtodoview');
+            this.$newpriority = this.$('#new-priority');
             this.$sortList = this.$('#sort-list');
+            
+            this.priorityList = [
+                'low',
+                'medium',
+                'high'
+            ];
+            
+            this.currentPriorityIndex = null;
 
 			this.listenTo(app.todos, 'add', this.addOne);
 			this.listenTo(app.todos, 'reset', this.addAll);
@@ -125,7 +135,7 @@ var app = app || {};
 				title: this.$input.val().trim(),
 				order: app.todos.nextOrder(),
 				completed: false,
-                priority: this.$priorityButton[0].checked
+                priority:  this.$newpriority.attr('value') ? +this.$newpriority.attr('value') : null
 			};
 		},
 
@@ -144,9 +154,55 @@ var app = app || {};
 			return false;
 		},
 
-        // Toggle the `"priority"` state of the new Todo item.
-		togglePriority: function () {
-			this.$newtodoview.toggleClass('priority');            
+        // Set the `"priority"` state of the new Todo item.
+		setPriority: function (event) {
+			var target = event.target;
+            if(target){
+                var $target = $(target);
+                var className = $target.attr('class');
+                
+                var up = className.match(/up$/);
+                var down = className.match(/down$/);
+                
+                if(up){
+                    if(typeof this.currentPriorityIndex === 'number' && this.currentPriorityIndex >= this.priorityList.length - 1){
+                        return;
+                    }
+                    
+                    if(this.currentPriorityIndex === null){
+                        this.currentPriorityIndex = 0;
+                    } else {
+                        this.currentPriorityIndex++;
+                    }                    
+                }
+                
+                if(down){
+                    if(typeof this.currentPriorityIndex === 'number' && (this.currentPriorityIndex - 1) < 0){
+                        this.currentPriorityIndex = null;
+                    } else if(this.currentPriorityIndex === null){
+                        return;
+                    }
+                    
+                    this.currentPriorityIndex--;
+                }
+                
+                var priorityLabelText = '';
+                for(var i = 0; i < this.currentPriorityIndex + 1; i++){
+                    priorityLabelText += '!';
+                }
+                
+                this.$priorityLabel.text(priorityLabelText); 
+                
+                /*
+                Only set the priority value for the new todo item if the priority is set
+                */
+                if(this.currentPriorityIndex >= 0){
+                    this.$newpriority.attr('value', this.currentPriorityIndex);
+                } else {
+                    this.$newpriority.removeAttr('value');
+                }
+                
+            }
 		},
         
 		toggleAllComplete: function () {

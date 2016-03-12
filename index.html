@@ -11,8 +11,9 @@
 				<h1>todos</h1>
                 <div class="newtodoview">
                     <input id="new-todo" placeholder="What needs to be done?" autofocus>
+                    <input id="new-priority" type="hidden">
                     <div class="priority-div">
-                        <div class="priority-label"></div>
+                        <div id="new-priority-label" class="priority-label"></div>
                         <div class="priority-btn-div">
                             <button class="priority-btn priority-btn-up"></button>
                             <button class="priority-btn priority-btn-down"></button>
@@ -44,18 +45,24 @@
 			<div class="view">
 				<input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
                 <div class="priority-div">
-                    <div class="priority-label"></div>
-                    <div class="priority-btn-div">
+                    <div class="priority-label">
+                            <%
+                                for(var i = 0; i < priority + 1; i++){
+                                    print('!');
+                                }
+                            %>
+                        </div>
+                    <div class="priority-btn-div">                        
                         <button class="priority-btn priority-btn-up"></button>
                         <button class="priority-btn priority-btn-down"></button>
                     </div>
                 </div>
-                <!-- <input class="priority-btn" type="checkbox" <%= priority ? 'checked' : '' %>> -->
 				<label><%- title %><%= completed ? '<span> -- done</span>' : '' %></label>
                 <button class="edit-btn"></button>
 				<button class="destroy"></button>
 			</div>
 			<input class="edit" value="<%- title %>">
+            <input class="todo-priority" type="hidden">
 		</script>
 		<script type="text/template" id="stats-template">
 			<span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>

@@ -20,7 +20,7 @@ var app = app || {};
 			'click .toggle': 'toggleCompleted',
 			'dblclick label': 'edit',
             'click .edit-btn': 'edit',
-            'click .priority-btn': 'togglePriority',
+            'click .priority-btn': 'setPriority',
 			'click .destroy': 'clear',
 			'keypress .edit': 'updateOnEnter',
 			'keydown .edit': 'revertOnEscape',
@@ -34,7 +34,13 @@ var app = app || {};
 		initialize: function () {
 			this.listenTo(this.model, 'change', this.render);
 			this.listenTo(this.model, 'destroy', this.remove);
-			this.listenTo(this.model, 'visible', this.toggleVisible);            
+			this.listenTo(this.model, 'visible', this.toggleVisible);     
+
+            this.priorityList = [
+                'low',
+                'medium',
+                'high'
+            ];
 		},
 
 		// Re-render the titles of the todo item.
@@ -66,7 +72,7 @@ var app = app || {};
 		isHidden: function () {
 			switch(app.TodoFilter){
                 case 'priority' :
-                     return !this.model.get('priority');
+                     return this.model.get('priority');
                 break;
                 default :
                     return this.model.get('completed') ?
@@ -76,10 +82,40 @@ var app = app || {};
             }            
 		},
 
-        // Toggle the `"priority"` state of the model.
-		togglePriority: function () {
-			this.$el.toggleClass('priority');
-            this.model.togglePriority();
+        // Set the `"priority"` state of the new Todo item.
+		setPriority: function (event) {
+			var target = event.target;
+            if(target){
+                var $target = $(target);
+                var className = $target.attr('class');
+                
+                var up = className.match(/up$/);
+                var down = className.match(/down$/);
+                
+                var priority = +this.model.get('priority');
+                
+                if(up){
+                    if(typeof priority === 'number' && priority >= this.priorityList.length - 1){
+                        return;
+                    }
+                    
+                    if(priority === null){
+                        this.model.set('priority', 0);
+                    } else {
+                        this.model.set('priority', priority + 1);
+                    }                    
+                }
+                
+                if(down){
+                    if(typeof priority === 'number' && (priority - 1) < 0){
+                        this.model.set('priority',  null);
+                    } else if(this.model.get('priority') === null){
+                        return;
+                    }
+                    
+                    this.model.set('priority', priority - 1);
+                }
+            }
 		},
         
 		// Toggle the `"completed"` state of the model.

@@ -14,13 +14,13 @@ var app = app || {};
 		defaults: {
 			title: '',
 			completed: false,
-            priority: false
+            priority: 0
 		},
 
         // Toggle the `priority` state of this todo item
         togglePriority: function(){
            this.save({
-               priority: !this.get('priority')
+               priority: this.get('priority')
            });
         },
         
