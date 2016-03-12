@@ -72,7 +72,7 @@ var app = app || {};
 		isHidden: function () {
 			switch(app.TodoFilter){
                 case 'priority' :
-                     return this.model.get('priority');
+                     return this.model.get('priority') === null;
                 break;
                 default :
                     return this.model.get('completed') ?
@@ -99,7 +99,7 @@ var app = app || {};
                         return;
                     }
                     
-                    if(priority === null){
+                    if(this.model.get('priority') === null){
                         this.model.set('priority', 0);
                     } else {
                         this.model.set('priority', priority + 1);
@@ -108,12 +108,12 @@ var app = app || {};
                 
                 if(down){
                     if(typeof priority === 'number' && (priority - 1) < 0){
-                        this.model.set('priority',  null);
+                        this.model.set('priority', null);
                     } else if(this.model.get('priority') === null){
                         return;
+                    } else {
+                        this.model.set('priority', priority - 1);
                     }
-                    
-                    this.model.set('priority', priority - 1);
                 }
             }
 		},

@@ -47,9 +47,11 @@
                 <div class="priority-div">
                     <div class="priority-label">
                             <%
-                                for(var i = 0; i < priority + 1; i++){
-                                    print('!');
-                                }
+                            	if(priority !== null){
+                            		for(var i = 0; i < priority + 1; i++){
+                                    	print('!');
+                                	}
+                            	}                                
                             %>
                         </div>
                     <div class="priority-btn-div">                        
